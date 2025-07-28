@@ -1,0 +1,8 @@
+# Dockerfile.client
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+
+COPY out/ ./out/
+COPY lib/ ./lib/
+
+CMD ["java", "-cp", "out:lib/*", "edu.distribuido.rmi.client.TestClientLogin"]

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rmi-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rmi-server
+  template:
+    metadata:
+      labels:
+        app: rmi-server
+    spec:
+      containers:
+      - name: rmi-server
+        image: rmi-server:v3
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 1099
+        env:
+        - name: DB_HOST
+          value: "postgres"
+        - name: DB_NAME
+          value: "rmi_db"
+        - name: DB_USER
+          value: "rmi_user"
+        - name: DB_PASS
+          value: "rmi_pass"
+        - name: JAVA_RMI_SERVER_HOSTNAME
+          value: "rmi-server"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rmi-server
+spec:
+  selector:
+    app: rmi-server
+  ports:
+  - port: 1099
+    targetPort: 1099
+    protocol: TCP

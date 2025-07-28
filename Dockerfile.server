@@ -1,0 +1,21 @@
+# Dockerfile para el servidor RMI
+#FROM eclipse-temurin:17-jdk
+
+#WORKDIR /app
+
+#COPY out/ ./out/
+#COPY lib/ ./lib/
+#COPY entrypoint.sh .
+
+#RUN chmod +x entrypoint.sh
+
+#EXPOSE 1099
+
+#ENTRYPOINT ["./entrypoint.sh"]
+FROM openjdk:17
+WORKDIR /app
+COPY out /app/out
+COPY lib /app/lib
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+CMD ["/app/entrypoint.sh"]
